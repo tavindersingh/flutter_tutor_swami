@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_app/home/presentation/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = false;
+  int _counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +103,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+
+                        if (result != null) {
+                          setState(() {
+                            _counter = result;
+                          });
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFE10600),
                         foregroundColor: Colors.white,
@@ -114,6 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+              Text("Count from Home Screen: $_counter"),
             ],
           ),
         ),
